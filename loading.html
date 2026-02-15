@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔱 लोडिंग... 🔱</title>
+    <style>
+        body {
+            margin: 0;
+            background: black;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #loadingScreen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #0a0a1a 0%, #000000 100%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s ease;
+        }
+
+        .wish-text {
+            color: #ffd700;
+            font-size: 60px;
+            letter-spacing: 15px;
+            text-shadow: 0 0 40px #ffaa00, 0 0 80px #ff5500;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: wishReveal 2s forwards;
+        }
+
+        @keyframes wishReveal {
+            0% { opacity: 0; transform: scale(0.8); letter-spacing: 30px; }
+            100% { opacity: 1; transform: scale(1); letter-spacing: 15px; }
+        }
+
+        .loader-container {
+            width: 300px;
+            height: 4px;
+            background: rgba(255,215,0,0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards 1.5s;
+        }
+
+        .loader-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ffaa00, #ff5500, #ffaa00);
+            background-size: 200% 100%;
+            box-shadow: 0 0 20px #ffaa00;
+            border-radius: 4px;
+            transition: width 0.1s linear;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .percentage {
+            color: #ffd700;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 15px 0 5px;
+            letter-spacing: 2px;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards 2s;
+            text-shadow: 0 0 20px #ffaa00;
+        }
+
+        .loading-text {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            letter-spacing: 2px;
+            margin-top: 10px;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards 1.8s;
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingScreen">
+        <div class="wish-text">॥ हर हर महादेव ॥</div>
+        <div class="loader-container">
+            <div class="loader-bar" id="loaderBar"></div>
+        </div>
+        <div class="percentage" id="percentageDisplay">0%</div>
+        <div class="loading-text" id="loadingText">जागृत हो रहा है महादेव...</div>
+    </div>
+
+    <script>
+        const loadingScreen = document.getElementById('loadingScreen');
+        const loaderBar = document.getElementById('loaderBar');
+        const percentageDisplay = document.getElementById('percentageDisplay');
+        const loadingText = document.getElementById('loadingText');
+
+        let percentage = 0;
+
+        const interval = setInterval(() => {
+            percentage += 1;
+            
+            loaderBar.style.width = percentage + '%';
+            percentageDisplay.textContent = percentage + '%';
+            
+            if (percentage === 30) {
+                loadingText.textContent = 'महादेव जाग रहे हैं...';
+            } else if (percentage === 60) {
+                loadingText.textContent = 'तांडव शुरू हो रहा है...';
+            } else if (percentage === 80) {
+                loadingText.textContent = 'बस थोड़ा सा और...';
+            } else if (percentage === 100) {
+                loadingText.textContent = 'हर हर महादेव! 🙏';
+            }
+            
+            if (percentage >= 100) {
+                clearInterval(interval);
+                
+                setTimeout(() => {
+                    loadingScreen.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        window.location.href = 'mahadev.html';
+                    }, 1500);
+                }, 800);
+            }
+        }, 100);
+    </script>
+</body>
+</html>
