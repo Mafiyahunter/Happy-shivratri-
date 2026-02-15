@@ -1,0 +1,15 @@
+# render.yaml
+services:
+  - type: web
+    name: mahashivratri
+    runtime: static
+    buildCommand: echo "Static site - no build needed"
+    staticPublishPath: .
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
